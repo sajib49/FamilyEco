@@ -10,18 +10,22 @@ namespace FE.API.Repositories
     public class PersonRepository : IPersonRepository
     {
         private readonly FamilyEcoDbContext _context;
+
         public PersonRepository(FamilyEcoDbContext context)
         {
             _context = context;
         }
+
         public IEnumerable<Person> GetAllPersons()
         {
             return _context.Persons.ToList();
         }
+
         public Person GetPersonById(int personId)
         {
             return _context.Persons.Find(personId);
         }
+
         public void AddPerson(Person personEntity)
         {
             if (personEntity != null)
@@ -29,6 +33,7 @@ namespace FE.API.Repositories
                 _context.Persons.Add(personEntity);
             }
         }
+
         public void UpdatePerson(Person personEntity)
         {
             if (personEntity != null)
@@ -36,11 +41,13 @@ namespace FE.API.Repositories
                 _context.Entry(personEntity).State = EntityState.Modified;
             }
         }
+
         public void DeletePerson(int personId)
         {
             Person personEntity = _context.Persons.Find(personId);
             _context.Persons.Remove(personEntity);
         }
+
         public void Save()
         {
             _context.SaveChanges();
@@ -58,10 +65,10 @@ namespace FE.API.Repositories
             }
             this.disposed = true;
         }
+
         public void Dispose()
         {
             Dispose(true);
-
             GC.SuppressFinalize(this);
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -27,6 +26,8 @@ namespace FE.API.Models
         public DateTime? BirthDateFrom { get; set; }
         public DateTime? BirthDateTo { get; set; }
         public bool? IsBirthDateBCE { get; set; }
+
+        public virtual PersonProfile PersonProfile { get; set; }
 
         //public virtual ICollection<PersonBiographical> PersonBiographicals { get; set; }        
         //public virtual ICollection<PersonContact> PersonContacts { get; set; }

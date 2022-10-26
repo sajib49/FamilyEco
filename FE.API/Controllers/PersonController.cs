@@ -12,8 +12,7 @@ namespace FE.API.Controllers
         public PersonController()
         {
             //For the time being we're not going to use dependency injection. Later we will.
-            unitOfWork = new UnitOfWork();
-            
+            unitOfWork = new UnitOfWork();            
         }
 
         [HttpGet]
@@ -22,6 +21,12 @@ namespace FE.API.Controllers
         {
             var persons = unitOfWork.PersonRepository.GetById(id);
             return Ok(persons);
+        }
+
+        [HttpPost]
+        public IHttpActionResult AddPerson()
+        {
+            return Ok();
         }
     }
 }

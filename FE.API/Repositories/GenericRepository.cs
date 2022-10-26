@@ -15,23 +15,28 @@ namespace FE.API.Repositories
             this.context = context;
             this.dbSet = context.Set<TEntity>();
         }
+
         public virtual IEnumerable<TEntity> GetAll()
         {
             return dbSet.ToList();
         }
+
         public virtual TEntity GetById(object id)
         {
             return dbSet.Find(id);
         }
+
         public virtual void Insert(TEntity entity)
         {
             dbSet.Add(entity);
         }
+
         public virtual void Delete(object id)
         {
             TEntity entityToDelete = dbSet.Find(id);
             Delete(entityToDelete);
         }
+
         public virtual void Delete(TEntity entityToDelete)
         {
             if (context.Entry(entityToDelete).State == EntityState.Detached)
