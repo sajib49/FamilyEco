@@ -7,6 +7,7 @@ namespace FE.API.Models
     public class PersonContact
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int PersonId { get; set; }
         public string Email { get; set; }
@@ -19,7 +20,6 @@ namespace FE.API.Models
         public string Skype { get; set; }
         public string Address { get; set; }
         public string Other { get; set; }
-
         public virtual Person Person { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace FE.API.Models
     public class Person
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string GivenName { get; set; }
         public string SurnameNow { get; set; }
@@ -27,10 +28,10 @@ namespace FE.API.Models
         public DateTime? BirthDateTo { get; set; }
         public bool? IsBirthDateBCE { get; set; }
 
-        public virtual ICollection<PersonBiographical> PersonBiographicals { get; set; }        
-        public virtual ICollection<PersonContact> PersonContacts { get; set; }
-        public virtual PersonProfile PersonProfile { get; set; }        
-        public virtual ICollection<PersonRelationship> PersonRelationships { get; set; }        
-        public virtual ICollection<PersonRelationship> PersonRelationships1 { get; set; }
+        //public virtual ICollection<PersonBiographical> PersonBiographicals { get; set; }        
+        //public virtual ICollection<PersonContact> PersonContacts { get; set; }
+        //public virtual PersonProfile PersonProfile { get; set; }        
+        //public virtual ICollection<PersonRelationship> PersonRelationships { get; set; }        
+        //public virtual ICollection<PersonRelationship> PersonRelationships1 { get; set; }
     }
 }

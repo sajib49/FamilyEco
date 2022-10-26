@@ -8,6 +8,7 @@ namespace FE.API.Models
     public class PersonBiographical
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public int PersonId { get; set; }

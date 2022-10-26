@@ -1,6 +1,7 @@
-﻿using System.Data.Entity;
+﻿using FE.API.Models;
+using System.Data.Entity;
 
-namespace FE.API.Models
+namespace FE.API.DataAccess
 {
     public class FamilyEcoDbContext : DbContext
     {

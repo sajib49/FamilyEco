@@ -7,6 +7,7 @@ namespace FE.API.Models
     public class PersonProfile
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int PersonId { get; set; }
         public string Profession { get; set; }
@@ -15,6 +16,5 @@ namespace FE.API.Models
         public string Activities { get; set; }
         public string BioNotes { get; set; }
 
-        public virtual Person Person { get; set; }
     }
 }

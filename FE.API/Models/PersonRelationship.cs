@@ -8,10 +8,11 @@ namespace FE.API.Models
     public class PersonRelationship
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int PersonId1 { get; set; }
         public int? PersonId2 { get; set; }
-        public short RelationType { get; set; }
+        public string RelationType { get; set; }
         public int? RelationId { get; set; }
 
         public virtual Person Person { get; set; }
