@@ -4,10 +4,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
-
-namespace FE.API.Models
+namespace FE.API.Models.Repositories
 {
-    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class 
+    public class GenericRepository<TEntity>  where TEntity : class
     {
         protected readonly DbSet<TEntity> DbSet;
         private readonly FamilyEcoDbContext _dbContext = new FamilyEcoDbContext();

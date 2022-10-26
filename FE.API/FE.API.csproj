@@ -167,13 +167,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\FamilyEcoDbContext.cs" />
-    <Compile Include="Models\GenericRepository.cs" />
-    <Compile Include="Models\IRepository.cs" />
+    <Compile Include="Models\Interfaces\IPersonRepository.cs" />
+    <Compile Include="Models\Repositories\GenericRepository.cs" />
+    <Compile Include="Models\Interfaces\IRepository.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\PersonBiographical.cs" />
     <Compile Include="Models\PersonContact.cs" />
     <Compile Include="Models\PersonProfile.cs" />
     <Compile Include="Models\PersonRelationship.cs" />
+    <Compile Include="Models\Repositories\PersonRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
