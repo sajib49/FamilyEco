@@ -11,8 +11,7 @@ namespace FE.API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string GivenName { get; set; }
-        public string SurnameNow { get; set; }
-        public string SurnameAtBirth { get; set; }
+        public string Surname { get; set; }
         public string Nickname { get; set; }
         public short? Gender { get; set; }
         public string Suffix { get; set; }
