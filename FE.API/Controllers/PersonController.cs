@@ -1,5 +1,7 @@
 ﻿using FE.API.DataAccess;
+using FE.API.Models;
 using FE.API.Repositories;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace FE.API.Controllers
@@ -24,9 +26,17 @@ namespace FE.API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult AddPerson()
+        public IHttpActionResult AddPerson(Person aPerson)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+            {                
+                return BadRequest(ModelState);
+            }
+
+            unitOfWork.PersonRepository.Insert(aPerson);
+            unitOfWork.Save();
+
+            return Created("", aPerson);
         }
     }
 }
