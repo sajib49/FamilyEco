@@ -1,54 +1,97 @@
 ﻿using FE.API.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace FE.API.Repositories
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<T> : IGenericRepository<T>, IDisposable where T : class
     {
-        internal FamilyEcoDbContext context;
-        internal DbSet<TEntity> dbSet;
+        public FamilyEcoDbContext Context { get; set; }
+        private IDbSet<T> _entities;
+        public GenericRepository(IUnitOfWork<FamilyEcoDbContext> unitOfWork)
+            : this(unitOfWork.Context)
+        {
+        }
 
         public GenericRepository(FamilyEcoDbContext context)
         {
-            this.context = context;
-            this.dbSet = context.Set<TEntity>();
+            Context = context;
         }
 
-        public virtual IEnumerable<TEntity> GetAll()
+        public virtual IQueryable<T> Table
         {
-            return dbSet.ToList();
+            get { return Entities; }
         }
 
-        public virtual TEntity GetById(object id)
+        protected virtual IDbSet<T> Entities
         {
-            return dbSet.Find(id);
+            get { return _entities ?? (_entities = Context.Set<T>()); }
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual IEnumerable<T> FindAll()
         {
-            dbSet.Add(entity);
+            return Entities.ToList();
         }
 
-        public virtual void Delete(object id)
+        public virtual IEnumerable<T> FindAll(Expression<Func<T, bool>> predicate)
         {
-            TEntity entityToDelete = dbSet.Find(id);
+            return Entities.Where(predicate);
+        }
+
+        public virtual T Find(Expression<Func<T, bool>> predicate)
+        {
+            return Entities.Where(predicate).FirstOrDefault();
+        }
+
+        public virtual void Insert(T entity)
+        {
+            if (Context.Entry(entity).State == EntityState.Detached)
+            {
+                Entities.Attach(entity);
+            }
+            Entities.Remove(entity);
+        }
+
+        public void BulkInsert(IEnumerable<T> entities)
+        {
+            Context.Configuration.AutoDetectChangesEnabled = false;
+            Context.Set<T>().AddRange(entities);
+            Context.SaveChanges();
+        }
+
+        public virtual void Update(T entity)
+        {
+            Entities.Attach(entity);
+            Context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public virtual void Delete(T entity)
+        {
+            if (Context.Entry(entity).State == EntityState.Detached)
+            {
+                Entities.Attach(entity);
+            }
+            Entities.Remove(entity);
+        }
+
+        public virtual void SetEntryModified(T entity)
+        {
+            Context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public void Delete(object id)
+        {
+            var entityToDelete = Entities.Find(id);
             Delete(entityToDelete);
         }
 
-        public virtual void Delete(TEntity entityToDelete)
+        public void Dispose()
         {
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                dbSet.Attach(entityToDelete);
-            }
-            dbSet.Remove(entityToDelete);
-        }
-        public virtual void Update(TEntity entityToUpdate)
-        {
-            dbSet.Attach(entityToUpdate);
-            context.Entry(entityToUpdate).State = EntityState.Modified;
+            if (Context != null)
+                Context.Dispose();
         }
     }
 }

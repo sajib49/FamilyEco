@@ -1,12 +1,14 @@
-﻿using FE.API.Models;
-using System;
-using FE.API.Repositories;
+﻿using System.Data.Entity;
 
 namespace FE.API.DataAccess
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork<out TContext>
+        where TContext : DbContext, new()
     {
-        IGenericRepository<Person> PersonRepository { get; }
+        TContext Context { get; }
+        void CreateTransaction();
+        void Commit();
+        void Rollback();
         void Save();
     }
 }
